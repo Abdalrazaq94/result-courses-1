@@ -39,8 +39,8 @@ if(error) {
    const {error} = validateCourse(req.body)
 //
 if(error) {
-    res.status(400).send(result.error.detaiLs[0].message)
-    return;
+    return res.status(400).send(result.error.detaiLs[0].message)
+    
 }
 
 //updTING THE NAME 
@@ -67,4 +67,15 @@ let course =courses.find(c => c.id === parseInt(req.params,id ))
  app.listen(3000, () => console.log(`Here is the post ${PORT}`)
  );
  
- 
+ //delete
+ app.delete('/api/courses/:id',(req,res) =>{
+// look up the course
+let course =courses.find(c => c.id === parseInt(req.params,id ))
+  if (!course) res.status(404).send('the course with the given id was not found')
+//return 404
+// delete
+ const index = courses.indexOf(course)
+ courses.splice(index, 1);
+ // respond
+ res.send(course);
+ })
